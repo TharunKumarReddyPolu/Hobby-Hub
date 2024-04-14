@@ -1,0 +1,16 @@
+.main {
+    color: white;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.create-btn {
+    padding: 5px;
+    border-radius: 15px;
+    width: 25%;
+}

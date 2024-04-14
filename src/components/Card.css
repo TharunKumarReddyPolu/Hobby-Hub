@@ -1,0 +1,17 @@
+.card {
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(153, 153, 153, 0.497);
+    border-radius: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    width: 85%;
+    text-align: left;
+    border-width: thick;
+}
+
+.title {
+    color:white;
+    font-size: 24px;
+}
+
