@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import "./CreatePost.css";
 import { supabase } from "../supabaseClient";
-import { usePosts } from "../pages/PostContext";
+import { usePosts } from "./PostContext";
 
 const CreatePost = () => {
-  const [post, setPost] = useState({ title: "", content: "", imageURL: "", upVotes: 0, comments: {} });
+  const [post, setPost] = useState({ title: "", content: "", imageURL: "", upVotes: 0});
   const { posts, setPosts } = usePosts();
 
   const handleChange = (event) => {
+    console.log(post);
     const { name, value } = event.target;
     setPost((prev) => {
       return {
@@ -19,16 +20,16 @@ const CreatePost = () => {
   };
 
 
-
   const handleCreate = async (event) => {
-    const { title, content, imageURL, upVotes } = post;
+    console.log(post);
+    const { title, content, imageURL, upVotes} = post;
     if (!title) {
       alert("Title is required");
       return;
     }
 
-    const { data, error } = await supabase.from("posts").insert([
-      { title, content, imageURL, upVotes },
+    const { data, error } = await supabase.from("hobbyhub").insert([
+      { title, content, imageURL, upVotes},
     ]);
 
     if (error) {

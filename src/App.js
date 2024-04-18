@@ -8,32 +8,6 @@ import DetailPost from "./pages/DetailPost";
 import { Link } from "react-router-dom";
 
 const App = () => {
-  const posts = [
-    {
-      id: "1",
-      title: "Cartwheel in Chelsea 🤸🏽‍♀️",
-      author: "Harvey Milian",
-      description: "",
-    },
-    {
-      id: "2",
-      title: "Love Lock in Paris 🔒",
-      author: "Beauford Delaney",
-      description: "",
-    },
-    {
-      id: "3",
-      title: "Wear Pink on Fridays 🎀",
-      author: "Onika Tonya",
-      description: "",
-    },
-    {
-      id: "4",
-      title: "Adopt a Dog 🐶",
-      author: "Denise Michelle",
-      description: "",
-    },
-  ];
 
   const handleSearch = () => {
     console.log("Search clicked");
@@ -43,15 +17,15 @@ const App = () => {
   let element = useRoutes([
     {
       path: "/",
-      element: <ReadPosts data={posts} />,
+      element: <ReadPosts />,
     },
     {
       path: "/detail/:id",
-      element: <DetailPost data={posts} />,
+      element: <DetailPost />,
     },
     {
       path: "/edit/:id",
-      element: <EditPost data={posts} />,
+      element: <EditPost />,
     },
     {
       path: "/new",

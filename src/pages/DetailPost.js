@@ -2,9 +2,9 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "./DetailPost.css";
 import { usePosts } from "./PostContext";
-import { likeButton } from "../components/like-button.png";
-import { editButton } from "../components/edit-button.png";
-import { deleteButton } from "../components/delete-button.png";
+import likeButton from "../components/like-button.png";
+import editButton from "../components/edit-button.png";
+import deleteButton from "../components/delete-button.png";
 
 const DetailPost = () => {
   const { id } = useParams();

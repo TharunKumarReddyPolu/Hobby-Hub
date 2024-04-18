@@ -7,7 +7,7 @@ import { usePosts } from "../pages/PostContext";
 
 const EditPost = ({ data }) => {
   const { id } = useParams();
-  const { posts, setPosts } = usePosts();
+  const { posts, fetchPosts } = usePosts();
   let post = {};
 
   for (let i = 0; i < posts.length; i++) {
@@ -21,6 +21,7 @@ const EditPost = ({ data }) => {
     title: post.title,
     content: post.content,
     imageURL: post.imageURL,
+    upVotes: post.upVotes,
   });
 
   const handleChange = (event) => {
