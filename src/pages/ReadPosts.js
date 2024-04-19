@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./ReadPosts.css";
 import { Link } from "react-router-dom";
@@ -9,6 +9,10 @@ import { usePosts } from "./PostContext";
 const ReadPosts = () => {
   const { posts } = usePosts();
   const [sortedPosts, setSortedPosts] = useState(posts);
+
+  useEffect(() => {
+    setSortedPosts(posts);
+  }, [posts]);
 
   const handleNewest = () => {
     const sortedByNewest = [...posts].sort((a, b) => {

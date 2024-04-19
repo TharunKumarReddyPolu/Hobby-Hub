@@ -80,7 +80,7 @@ const EditPost = () => {
             id="content"
             name="content"
             placeholder="Content (Optional)"
-            value={updatedPost.author}
+            value={updatedPost.content}
             onChange={handleChange}
           ></textarea>
           <br />
