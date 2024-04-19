@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "./DetailPost.css";
+import { supabase } from "../supabaseClient";
 import { usePosts } from "./PostContext";
 import likeButton from "../components/like-button.png";
 import editButton from "../components/edit-button.png";
@@ -8,7 +9,7 @@ import deleteButton from "../components/delete-button.png";
 
 const DetailPost = () => {
   const { id } = useParams();
-  const { posts } = usePosts();
+  const { posts, fetchPosts } = usePosts();
 
   let post = {};
   for (let i = 0; i < posts.length; i++) {
@@ -18,13 +19,41 @@ const DetailPost = () => {
     }
   }
 
-  const handleLike = () => {
+  const handleLike = async (event) => {
+    const updatedPost = {
+      title: post.title,
+      content: post.content,
+      imageURL: post.imageURL,
+      upVotes: post.upVotes + 1,
+    };
+    
+    const { data, error } = await supabase
+      .from("hobbyhub")
+      .update(updatedPost)
+      .eq("id", id);
+
+    if (error) {
+      console.log("Error", error);
+    } else {
+      console.log("data", data);
+      fetchPosts();
+    }
   };
 
-  const handleEdit = () => {
-  };
+  const handleDelete = async (event) => {
+    const { data, error } = await supabase
+    .from("hobbyhub")
+    .delete()
+    .eq("id", id);
 
-  const handleDelete = () => {
+    if (error) {
+      console.log("Error", error);
+    } else {
+      console.log("data", data);
+      alert("Post deleted successfully!");
+      fetchPosts();
+    }
+    window.location = "/";
   };
 
 
@@ -55,17 +84,20 @@ const DetailPost = () => {
 
   return (
     <div className="main">
-      <div>
+      <div className="post-detail">
         <p>Posted {timeSince(post.created_at)}</p>
-        <h4>{post.title}</h4>
+        <h2>{post.title}</h2>
         <p>{post.content}</p>
-        <img src={post.imageURL} alt={post.title} />
+        <img className="post-img" src={post.imageURL} alt={post.title} />
         <div className="updates">
-            <img className="updates-btn" src={likeButton} onClick={handleLike} alt="like button"/>
-            <img className="updates-btn" src={editButton} onClick={handleEdit} alt="edit button"/>
-            <img className="updates-btn" src={deleteButton} onClick={handleDelete} alt="delete button"/>
+            <img className="updates-btn-left" src={likeButton} onClick={handleLike} alt="like button"/> {post.upVotes} upvotes
+            <Link to={`/edit/${post.id}`}>
+            <img className="updates-btn-right1" src={editButton} alt="edit button"/>
+            </Link>
+            <img className="updates-btn-right2" src={deleteButton} onClick={handleDelete} alt="delete button"/>
         </div>
-        <div>
+        <div className="comment-section">
+          <h3>Comments</h3>
           {/* {
             post.comments.map((comment, index) => (
               <div key={index}>

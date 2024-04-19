@@ -5,11 +5,11 @@ import "./EditPost.css";
 import { supabase } from "../supabaseClient";
 import { usePosts } from "../pages/PostContext";
 
-const EditPost = ({ data }) => {
+const EditPost = () => {
   const { id } = useParams();
   const { posts, fetchPosts } = usePosts();
+  
   let post = {};
-
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === parseInt(id)) {
       post = posts[i];
@@ -34,42 +34,69 @@ const EditPost = ({ data }) => {
     });
   };
 
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    const { data, error } = await supabase
+      .from("hobbyhub")
+      .update({
+        title: updatedPost.title,
+        content: updatedPost.content,
+        imageURL: updatedPost.imageURL,
+        upVotes: updatedPost.upVotes,
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("Error updating post");
+    } else {
+      console.log("data", data);
+      alert("Post updated successfully!");
+      fetchPosts();
+    }
+    window.location = "/"
+  }
+
   return (
-    <div>
-      <form>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Title"
-          value={updatedPost.title}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
+    <div className="main">
+      <div className="edit-form">
+        <h1>Edit your Hobby!</h1>
+        <form>
+          <input
+            className="input"
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Title"
+            value={updatedPost.title}
+            onChange={handleChange}
+          />
+          <br />
+          <br />
 
-        <input
-          type="text"
-          id="content"
-          name="content"
-          placeholder="Content (Optional)"
-          value={updatedPost.author}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-
-        <input
-          type="text"
-          id="imageURL"
-          placeholder="Image URL (Optional)"
-          value={updatedPost.imageURL}
-          name="imageURL"
-          onChange={handleChange}
-        />
-        <br />
-        <button className="update-btn">Update Post</button>
-      </form>
+          <textarea
+            className="input"
+            rows="10"
+            cols="60"
+            id="content"
+            name="content"
+            placeholder="Content (Optional)"
+            value={updatedPost.author}
+            onChange={handleChange}
+          ></textarea>
+          <br />
+          <input
+            className="input"
+            type="text"
+            id="imageURL"
+            placeholder="Image URL (Optional)"
+            value={updatedPost.imageURL}
+            name="imageURL"
+            onChange={handleChange}
+          />
+          <br />
+          <button className="update-btn" onClick={handleUpdate}>Update Post</button>
+        </form>
+      </div>
     </div>
   );
 };

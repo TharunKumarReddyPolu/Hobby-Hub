@@ -6,11 +6,13 @@ import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
 import DetailPost from "./pages/DetailPost";
 import { Link } from "react-router-dom";
+import { usePosts } from './pages/PostContext';
 
 const App = () => {
+  const { posts } = usePosts();
 
-  const handleSearch = () => {
-    console.log("Search clicked");
+  const handleSearch = (event) => {
+    console.log("search clicked");
   };
 
   // Sets up routes

@@ -54,6 +54,7 @@ const CreatePost = () => {
         <h1> Create a Hobby!</h1>
         <form>
           <input
+            className="input"
             type="text"
             id="title"
             name="title"
@@ -63,6 +64,7 @@ const CreatePost = () => {
           <br />
           <br />
           <textarea
+            className="input"
             rows="10"
             cols="60"
             id="content"
@@ -72,6 +74,7 @@ const CreatePost = () => {
           ></textarea>
           <br />
           <input
+            className="input"
             type="text"
             id="imageURL"
             name="imageURL"
