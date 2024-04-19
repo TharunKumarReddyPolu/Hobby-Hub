@@ -1,0 +1,8 @@
+.updates-btn {
+    background-color: #f5f5f5;
+    color: #000;
+    border: 1px solid #000;
+    height: 2%;
+    width: 2%;
+    cursor: pointer;
+}

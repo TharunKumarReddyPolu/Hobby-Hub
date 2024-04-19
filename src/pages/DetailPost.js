@@ -18,6 +18,16 @@ const DetailPost = () => {
     }
   }
 
+  const handleLike = () => {
+  };
+
+  const handleEdit = () => {
+  };
+
+  const handleDelete = () => {
+  };
+
+
   const timeSince = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
     let interval = seconds / 31536000;
@@ -46,23 +56,23 @@ const DetailPost = () => {
   return (
     <div className="main">
       <div>
-        <p>`Posted ${timeSince(post.created_at)}`</p>
+        <p>Posted {timeSince(post.created_at)}</p>
         <h4>{post.title}</h4>
         <p>{post.content}</p>
         <img src={post.imageURL} alt={post.title} />
         <div className="updates">
-            <img src={likeButton} alt="like button"/>
-            <img src={editButton} alt="edit button"/>
-            <img src={deleteButton} alt="delete button"/>
+            <img className="updates-btn" src={likeButton} onClick={handleLike} alt="like button"/>
+            <img className="updates-btn" src={editButton} onClick={handleEdit} alt="edit button"/>
+            <img className="updates-btn" src={deleteButton} onClick={handleDelete} alt="delete button"/>
         </div>
         <div>
-          {
+          {/* {
             post.comments.map((comment, index) => (
               <div key={index}>
                 <p>{comment.content}</p>
               </div>
             ))
-          }
+          } */}
         </div>
       </div>
     </div>

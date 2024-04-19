@@ -5,7 +5,12 @@ import { supabase } from "../supabaseClient";
 import { usePosts } from "./PostContext";
 
 const CreatePost = () => {
-  const [post, setPost] = useState({ title: "", content: "", imageURL: "", upVotes: 0});
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    imageURL: "",
+    upVotes: 0,
+  });
   const { posts, setPosts } = usePosts();
 
   const handleChange = (event) => {
@@ -19,27 +24,29 @@ const CreatePost = () => {
     });
   };
 
-
-  const handleCreate = async (event) => {
+  const handleCreate = async () => {
+    window.event.preventDefault();
     console.log(post);
-    const { title, content, imageURL, upVotes} = post;
+    const { title, content, imageURL, upVotes } = post;
     if (!title) {
       alert("Title is required");
       return;
     }
 
-    const { data, error } = await supabase.from("hobbyhub").insert([
-      { title, content, imageURL, upVotes},
-    ]);
+    const { data, error } = await supabase
+      .from("hobbyhub")
+      .insert([{ title, content, imageURL, upVotes }]);
 
     if (error) {
-      console.log("Error creating post: "+ error.message);
+      console.log("Error creating post: " + error.message);
     } else {
-      setPosts([...posts, ...data]);
+      console.log(data);
       alert("Post created successfully");
+      setPosts([...posts, ...data]);
     }
+
     window.location = "/";
-  }
+  };
 
   return (
     <div className="main">
@@ -73,7 +80,10 @@ const CreatePost = () => {
           />
           <br />
           <br />
-          <button className="create-btn" onClick={handleCreate}> Create Post </button>
+          <button className="create-btn" onClick={handleCreate}>
+            {" "}
+            Create Post{" "}
+          </button>
         </form>
       </div>
     </div>

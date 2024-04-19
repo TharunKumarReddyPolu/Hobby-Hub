@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect ,useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { supabase } from "../supabaseClient";
 
 const PostContext = createContext();
@@ -15,12 +15,12 @@ export const PostProvider = ({ children }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [posts]);
+  }, []);
 
   const value = {
     posts,
     setPosts,
-    fetchPosts
+    fetchPosts,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
