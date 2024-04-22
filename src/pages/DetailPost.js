@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./DetailPost.css";
 import { supabase } from "../supabaseClient";
@@ -19,14 +20,23 @@ const DetailPost = () => {
     }
   }
 
+  const [updatedPost, setUpdatedPost] = useState({
+    title: post.title,
+    content: post.content,
+    imageURL: post.imageURL,
+    upVotes: post.upVotes,
+    comments: post.comments,
+  });
+
   const handleLike = async (event) => {
     const updatedPost = {
       title: post.title,
       content: post.content,
       imageURL: post.imageURL,
       upVotes: post.upVotes + 1,
+      comments: post.comments,
     };
-    
+
     const { data, error } = await supabase
       .from("hobbyhub")
       .update(updatedPost)
@@ -42,9 +52,9 @@ const DetailPost = () => {
 
   const handleDelete = async (event) => {
     const { data, error } = await supabase
-    .from("hobbyhub")
-    .delete()
-    .eq("id", id);
+      .from("hobbyhub")
+      .delete()
+      .eq("id", id);
 
     if (error) {
       console.log("Error", error);
@@ -56,6 +66,36 @@ const DetailPost = () => {
     window.location = "/";
   };
 
+  const handleCommentChange = (event) => {
+    const { value } = event.target;
+    setUpdatedPost((prev) => {
+      return {
+        ...prev,
+        comments: value,
+      };
+    });
+  };
+
+  const handleComment = async (event) => {
+    event.preventDefault();
+    const currComments = Array.isArray(post.comments) ? post.comments : [];
+    const updatedComments = [...currComments, updatedPost.comments];
+    const { data, error } = await supabase
+      .from("hobbyhub")
+      .update({
+        comments: updatedComments,
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("Error adding comment");
+    } else {
+      console.log("data", data);
+      alert("Comment added successfully!");
+      fetchPosts();
+      console.log(post.comments);
+    }
+  };
 
   const timeSince = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -90,21 +130,46 @@ const DetailPost = () => {
         <p>{post.content}</p>
         <img className="post-img" src={post.imageURL} alt={post.title} />
         <div className="updates">
-            <img className="updates-btn-left" src={likeButton} onClick={handleLike} alt="like button"/> {post.upVotes} upvotes
-            <Link to={`/edit/${post.id}`}>
-            <img className="updates-btn-right1" src={editButton} alt="edit button"/>
-            </Link>
-            <img className="updates-btn-right2" src={deleteButton} onClick={handleDelete} alt="delete button"/>
+          <img
+            className="updates-btn-left"
+            src={likeButton}
+            onClick={handleLike}
+            alt="like button"
+          />{" "}
+          {post.upVotes} upvotes
+          <Link to={`/edit/${post.id}`}>
+            <img
+              className="updates-btn-right1"
+              src={editButton}
+              alt="edit button"
+            />
+          </Link>
+          <img
+            className="updates-btn-right2"
+            src={deleteButton}
+            onClick={handleDelete}
+            alt="delete button"
+          />
         </div>
         <div className="comment-section">
           <h3>Comments</h3>
-          {/* {
+          {post.comments &&
             post.comments.map((comment, index) => (
               <div key={index}>
                 <p>{comment.content}</p>
               </div>
-            ))
-          } */}
+            ))}
+          <input
+            className="comment-input"
+            type="text"
+            id="comment-input"
+            name="comment-input"
+            placeholder="Leave a comment..."
+            onChange={handleCommentChange}
+          />
+          <button className="update-btn" onClick={handleComment}>
+            Add Comment
+          </button>
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@ const ReadPosts = () => {
                 content={post.content}
                 imageURL={post.imageURL}
                 upVotes={post.upVotes}
+                comments={post.comments}
                 created_at={post.created_at}
               />
             </Link>

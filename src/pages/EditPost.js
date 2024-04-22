@@ -22,6 +22,7 @@ const EditPost = () => {
     content: post.content,
     imageURL: post.imageURL,
     upVotes: post.upVotes,
+    comments: post.comments,
   });
 
   const handleChange = (event) => {
@@ -43,6 +44,7 @@ const EditPost = () => {
         content: updatedPost.content,
         imageURL: updatedPost.imageURL,
         upVotes: updatedPost.upVotes,
+        comments: updatedPost.comments,
       })
       .eq("id", id);
 

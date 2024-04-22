@@ -10,6 +10,7 @@ const CreatePost = () => {
     content: "",
     imageURL: "",
     upVotes: 0,
+    comments: [],
   });
   const { posts, setPosts } = usePosts();
 
