@@ -84,6 +84,16 @@ const CreatePost = () => {
           />
           <br />
           <br />
+          <input
+            className="input"
+            type="text"
+            id="videoURL"
+            name="videoURL"
+            placeholder="Video URL (Optional)"
+            onChange={handleChange}
+          />
+          <br />
+          <br />
           <button className="create-btn" onClick={handleCreate}>
             {" "}
             Create Post{" "}

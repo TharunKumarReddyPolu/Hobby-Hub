@@ -21,6 +21,7 @@ const EditPost = () => {
     title: post.title,
     content: post.content,
     imageURL: post.imageURL,
+    videoURL: post.videoURL,
     upVotes: post.upVotes,
     comments: post.comments,
   });
@@ -43,6 +44,7 @@ const EditPost = () => {
         title: updatedPost.title,
         content: updatedPost.content,
         imageURL: updatedPost.imageURL,
+        videoURL: updatedPost.videoURL,
         upVotes: updatedPost.upVotes,
         comments: updatedPost.comments,
       })
@@ -93,6 +95,16 @@ const EditPost = () => {
             placeholder="Image URL (Optional)"
             value={updatedPost.imageURL}
             name="imageURL"
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            className="input"
+            type="text"
+            id="videoURL"
+            placeholder="Video URL (Optional)"
+            value={updatedPost.videoURL}
+            name="videoURL"
             onChange={handleChange}
           />
           <br />

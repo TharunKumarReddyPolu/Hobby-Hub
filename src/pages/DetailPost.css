@@ -17,6 +17,12 @@
 .post-img {
     width: 30%;
     height: 30%;
+    margin-right: 10%;
+}
+
+.post-video {
+    margin-left: 10%;
+    border: 5px solid black;
 }
 
 

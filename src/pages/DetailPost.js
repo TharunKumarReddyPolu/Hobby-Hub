@@ -24,6 +24,7 @@ const DetailPost = () => {
     title: post.title,
     content: post.content,
     imageURL: post.imageURL,
+    videoURL: post.videoURL,
     upVotes: post.upVotes,
     comments: post.comments,
   });
@@ -33,6 +34,7 @@ const DetailPost = () => {
       title: post.title,
       content: post.content,
       imageURL: post.imageURL,
+      videoURL: post.videoURL,
       upVotes: post.upVotes + 1,
       comments: post.comments,
     };
@@ -128,7 +130,14 @@ const DetailPost = () => {
         <p>Posted {timeSince(post.created_at)}</p>
         <h2>{post.title}</h2>
         <p>{post.content}</p>
-        <img className="post-img" src={post.imageURL} alt={post.title} />
+        {/* Render the image only when imageURL is valid */}
+        {post.imageURL && (
+          <img className="post-img" src={post.imageURL} alt={post.title} />
+        )}
+        {/* Render the iframe only when videoURL is valid */}
+        {post.videoURL && (
+          <iframe className="post-video" src={post.videoURL} title={post.title} />
+        )}
         <div className="updates">
           <img
             className="updates-btn-left"
