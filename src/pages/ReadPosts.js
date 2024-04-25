@@ -4,7 +4,6 @@ import "./ReadPosts.css";
 import { Link } from "react-router-dom";
 import Card from "../components/Card";
 import EmptyPosts from "./EmptyPosts";
-import { usePosts } from "./PostContext";
 
 const ReadPosts = ({ posts, searchTitle}) => {
   const [sortedPosts, setSortedPosts] = useState(posts);

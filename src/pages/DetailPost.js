@@ -11,6 +11,7 @@ import deleteButton from "../components/delete-button.png";
 const DetailPost = () => {
   const { id } = useParams();
   const { posts, fetchPosts } = usePosts();
+  const [commentInput, setCommentInput] = useState("");
 
   let post = {};
   for (let i = 0; i < posts.length; i++) {
@@ -19,15 +20,6 @@ const DetailPost = () => {
       break;
     }
   }
-
-  const [updatedPost, setUpdatedPost] = useState({
-    title: post.title,
-    content: post.content,
-    imageURL: post.imageURL,
-    videoURL: post.videoURL,
-    upVotes: post.upVotes,
-    comments: post.comments,
-  });
 
   const handleLike = async (event) => {
     const updatedPost = {
@@ -69,19 +61,13 @@ const DetailPost = () => {
   };
 
   const handleCommentChange = (event) => {
-    const { value } = event.target;
-    setUpdatedPost((prev) => {
-      return {
-        ...prev,
-        comments: value,
-      };
-    });
+    setCommentInput(event.target.value);
   };
 
   const handleComment = async (event) => {
     event.preventDefault();
     const currComments = Array.isArray(post.comments) ? post.comments : [];
-    const updatedComments = [...currComments, updatedPost.comments];
+    const updatedComments = [...currComments, commentInput];
     const { data, error } = await supabase
       .from("hobbyhub")
       .update({
@@ -92,10 +78,9 @@ const DetailPost = () => {
     if (error) {
       alert("Error adding comment");
     } else {
-      console.log("data", data);
-      alert("Comment added successfully!");
+      console.log("Comment added successfully!");
       fetchPosts();
-      console.log(post.comments);
+      setCommentInput("");
     }
   };
 
@@ -164,8 +149,8 @@ const DetailPost = () => {
           <h3>Comments</h3>
           {post.comments &&
             post.comments.map((comment, index) => (
-              <div key={index}>
-                <p>{comment.content}</p>
+              <div className="comment" key={index}>
+                <p>- {comment}</p>
               </div>
             ))}
           <input
