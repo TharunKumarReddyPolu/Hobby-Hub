@@ -6,13 +6,19 @@ import Card from "../components/Card";
 import EmptyPosts from "./EmptyPosts";
 import { usePosts } from "./PostContext";
 
-const ReadPosts = () => {
-  const { posts } = usePosts();
+const ReadPosts = ({ posts, searchTitle}) => {
   const [sortedPosts, setSortedPosts] = useState(posts);
 
   useEffect(() => {
     setSortedPosts(posts);
   }, [posts]);
+
+  useEffect(() => {
+    const filteredPosts = posts.filter((post) => {
+      return post.title.toLowerCase().includes(searchTitle.toLowerCase());
+    });
+    setSortedPosts(filteredPosts);
+  }, [searchTitle, posts]);
 
   const handleNewest = () => {
     const sortedByNewest = [...posts].sort((a, b) => {

@@ -9,6 +9,7 @@ const CreatePost = () => {
     title: "",
     content: "",
     imageURL: "",
+    videoURL: "",
     upVotes: 0,
     comments: [],
   });
@@ -28,7 +29,7 @@ const CreatePost = () => {
   const handleCreate = async () => {
     window.event.preventDefault();
     console.log(post);
-    const { title, content, imageURL, upVotes } = post;
+    const { title, content, imageURL, videoURL, upVotes } = post;
     if (!title) {
       alert("Title is required");
       return;
